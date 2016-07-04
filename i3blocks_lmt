@@ -1,0 +1,41 @@
+#!/usr/bin/python
+
+import json
+import sys
+import urllib
+import webbrowser
+import time
+
+matchid = sys.argv[1]
+filename = '/tmp/i3blocks_lmt_' + matchid
+
+matchinfo = "http://ls.betradar.com/ls/feeds/?/betradar/no/Etc:UTC/gismo/match_info/" + matchid
+data = urllib.urlopen(matchinfo)
+obj=json.loads(data.read(), "utf-8")
+match = obj["doc"][0]["data"]["match"]
+
+if match["status"]["_id"] == 6:
+	minutes = (time.time() - match["ptime"]) / 60
+	seconds = "%02d" % int((minutes - int(minutes)) * 60)
+	minutes = "%02d" % int(minutes)
+	timestatus = minutes + ":" + seconds
+elif match["status"]["_id"] == 7:
+	minutes = ((time.time() - match["ptime"]) / 60) + 45
+	seconds = "%02d" % int((minutes - int(minutes)) * 60)
+	minutes = "%02d" % int(minutes)
+	timestatus = minutes + ":" + seconds
+else:
+	timestatus = match["_dt"]["time"];
+
+teams = match["teams"]["home"]["abbr"] + '-' + match["teams"]["away"]["abbr"]
+result = str(match["result"]["home"]) + ":" + str(match["result"]["away"])
+status = match["status"]["name"]
+
+text = teams + ': ' + result + ' (' + timestatus + ', ' + status + ')'
+
+print (text).encode("utf-8");
+print (text).encode("utf-8");
+print "#AADDAA"
+
+if len(sys.argv) > 2:
+	webbrowser.open("http://ls.betradar.com/ls/livescore/?/betradar/en/page/sportcenter#matchid_" + matchid)

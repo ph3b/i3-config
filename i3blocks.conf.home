@@ -1,0 +1,81 @@
+separator_block_width=24
+color=#888888
+
+
+[topprocess]
+command=echo "$(top -b -n1 | sed -n 8p | awk '{print $9 "%","(PID",$1",",$12 ")";}' | /usr/local/libexec/i3blocks/graph --id=topprocess --max=100 --length=10)"
+interval=5
+
+[temp]
+label=TEMP
+command=/usr/local/libexec/i3blocks/temperature | /usr/local/libexec/i3blocks/graph --id=temp --max=100 --min=50
+interval=10
+
+[cpu]
+label=CPU
+command=/usr/local/libexec/i3blocks/cpu_usage | /usr/local/libexec/i3blocks/graph --id=cpu --max=100
+interval=10
+
+[load]
+label=LOAD
+command=/usr/local/libexec/i3blocks/load_average | /usr/local/libexec/i3blocks/graph --max=4 --id=load
+interval=10
+
+[memory]
+label=MEM
+command=/usr/local/libexec/i3blocks/memory
+interval=30
+
+[swap]
+label=SWAP
+command=/usr/local/libexec/i3blocks/memory swap
+interval=30
+
+[nowplaying]
+label=♫
+command=echo "$(curl -s http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks\&user=kratskij\&api_key=a778aa7cbe301da6860e4f30325cde2f\&format=json\&limit=1 | python -c 'import json,sys,codecs;sys.stdin = codecs.getreader("utf-8")(sys.stdin);obj=json.load(sys.stdin, "utf-8");print (obj["recenttracks"]["track"][0]["artist"]["#text"] + " - " + obj["recenttracks"]["track"][0]["name"]).encode("utf-8");')"
+interval=10
+color=#DDAADD
+
+[volume]
+label=♪
+command=/usr/local/libexec/i3blocks/volume
+interval=once
+signal=1
+color=#DDDDAA
+
+[battery]
+label=BAT
+#label=⚡
+command=/usr/local/libexec/i3blocks/battery BAT0 | /usr/local/libexec/i3blocks/graph --id=battery --max=100 --length=1
+interval=30
+color=#AADDDD
+
+[time]
+label=
+command=date '+%Y-%m-%d %H:%M:%S %Z'
+interval=1
+color=#BBEEBB
+
+
+
+#[disk-home]
+#command=/usr/local/libexec/i3blocks/disk $HOME
+#interval=30
+
+#[wireless]
+#label=W
+#instance=wlan0
+#instance=wlp3s0
+#command=/usr/local/libexec/i3blocks/network
+#color=#00FF00
+#interval=10
+
+#[ethernet]
+#label=E
+#instance=eth0
+#instance=enp0s25
+#command=/usr/local/libexec/i3blocks/network
+#color=#00FF00
+#interval=10
+

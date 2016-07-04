@@ -1,0 +1,20 @@
+separator_block_width=10
+separator=false
+color=#888888
+full_text=❮
+align=center
+
+[volume]
+label=♪
+command=/usr/local/libexec/i3blocks/volume
+interval=once
+signal=1
+color=#DDDDAA
+
+
+[time]
+#label=⌚
+command=date '+%Y-%m-%d %H:%M:%S'
+interval=1
+color=#BBEEBB
+

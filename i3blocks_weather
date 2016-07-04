@@ -1,0 +1,85 @@
+#!/usr/bin/python
+# This python file uses the following encoding: utf-8
+
+import urllib2, sys, getopt
+from bs4 import BeautifulSoup
+from dateutil.parser import parse
+from datetime import timedelta
+
+#import pprint
+
+def usage():
+    print "Example usage: i3blocks_weather --limit=2 --badcolor=#FF0000 --warmcolor=#FFFF00 --coldcolor=#0088FF"
+
+def main(argv):
+    try:
+        symbolmap = { '1': '☀', '2': '☀', '3': '☁', '4': '☁', '5': '☂', '6': '⚡', '7': '❄', '8': '❄', '9': '☂', '10': '☔', '11': '⚡', '12': '❄', '13': '❄', '14': '❄', '14': '☁', '20': '⚡', '21': '⚡', '22': '⚡', '23': '⚡', '24': '⚡', '25': '⚡', '26': '⚡', '27': '⚡', '28': '⚡', '29': '⚡', '30': '⚡', '31': '⚡', '32': '⚡', '33': '⚡', '34': '⚡', '30': '⚡', '40': '☂', '41': '☔', '42': '❄', '43': '❄', '43': '❄', '44': '❄', '45': '❄', '46': '☂', '47': '❄', '48': '❄', '49': '❄', '50': '❄' }
+        winddirmap = { 'E': '←', 'S': '↑', 'W': '→', 'N': '↓', 'SE': '↖', 'SSE': '↖', 'ESE': '↖', 'SW': '↗', 'SSW': '↗', 'WSW': '↗', 'NW': '↘', 'NNW': '↘', 'WNW': '↘', 'NE': '↙', 'NNE': '↙', 'ENE': '↙' }
+
+        limit = 3
+        badcolor = "#FF0000"
+        warmcolor = "#FFFF00"
+        coldcolor = "#0088FF"
+
+        nicetemp = 20
+        badtemp = -10
+        badprecipitaion = 1
+        badwind = 10
+
+        opts, args = getopt.getopt(argv, "x:v", ['limit=', 'badcolor=', 'warmcolor=', 'coldcolor='])
+        for opt, arg in opts:
+            if opt == '--limit':
+                limit = int(arg)
+            if opt == '--badcolor':
+                badcolor = arg
+            if opt == '--warmcolor':
+                warmcolor = arg
+            if opt == '--coldcolor':
+                coldcolor = arg
+        url="http://www.yr.no/place/Norway/S%C3%B8r-Tr%C3%B8ndelag/Trondheim/Trondheim/forecast_hour_by_hour.xml"
+
+        soup = BeautifulSoup(urllib2.urlopen(url).read())
+
+        forecasts = soup.find('forecast').tabular.find_all('time')[0:limit]
+        utcoffset = int(soup.find('timezone')['utcoffsetminutes'])
+
+        texts = []
+        color = ""
+        for f in forecasts:
+            time = (parse(f['from']) - timedelta(minutes=utcoffset)).strftime('%H')
+            temp = int(f.find('temperature')['value'])
+            weathertype = f.find('symbol')['number']
+
+            precipitation = float(f.find('precipitation')['value'].encode('utf-8'))
+            windspeed = float(f.find('windspeed')['mps'].encode('utf-8'))
+
+            rain = ""
+            if precipitation > 0:
+                rain = str(precipitation) + "mm "
+
+            wind = ""
+            if windspeed > 1:
+                winddir = f.find('winddirection')['code']
+                wind = str(windspeed) + winddirmap[winddir];
+
+            if not color and temp > nicetemp:
+                color = warmcolor
+            if not color and temp < badtemp:
+                color = coldcolor
+            if not color and precipitation > badprecipitaion:
+                color = badcolor
+            if not color and windspeed > badwind:
+                color = badcolor
+
+            texts.append(time + ': ' + symbolmap[weathertype] + " " +  str(temp) + "° " + rain + wind)
+
+        print "[" +  "] [".join(texts) + "]"
+        print "[" +  "] [".join(texts) + "]"
+        print color
+    except getopt.GetoptError,e:
+        print e
+        usage()
+        sys.exit(2)
+
+if __name__ == '__main__':
+    main(sys.argv[1:])

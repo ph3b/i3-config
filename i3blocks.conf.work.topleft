@@ -1,0 +1,18 @@
+separator_block_width=10
+separator=false
+color=#888888
+full_text=❮
+align=center
+
+[capitals]
+command=/usr/local/libexec/i3blocks/capitals
+interval=60
+separator_block_width=24
+color=#888888
+[separator]
+
+#[lmt]
+#command=/usr/local/libexec/i3blocks/lmt 6187860 $BLOCK_BUTTON
+#interval=3600
+#separator_block_width=24
+#[separator]
