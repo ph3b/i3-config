@@ -4,6 +4,12 @@ color=#888888
 full_text=❮
 align=center
 
+[mediaplayer]
+command=~/dotfiles/i3wm/spotistat
+instance=spotify
+interval=5
+signal=10
+
 [volume]
 label=♪
 command=/usr/local/libexec/i3blocks/volume
@@ -14,7 +20,7 @@ color=#DDDDAA
 
 [time]
 #label=⌚
-command=date '+%Y-%m-%d %H:%M:%S'
+command=date '+%Y-%m-%d %H:%M '
 interval=1
 color=#BBEEBB
 

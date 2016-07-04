@@ -205,7 +205,7 @@ client.urgent               #883232        #883232         #FFFFFF
 # Henrik specific stuff
 # focus_follows_mouse no
 
-bindsym $mod+p exec i3lock
+bindsym $mod+p exec i3lock -c 000000
 bindsym $mod+t border toggle
 
 bindsym $mod+F12 exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
