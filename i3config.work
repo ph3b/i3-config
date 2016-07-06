@@ -220,11 +220,9 @@ for_window [class="Guake" instance="guake"] floating enable
 for_window [title="Controlled multi-tab browsing"] floating enable
 
 #assign certain applications to certain workspaces
-assign [class="xChat"] $ws4
-assign [class="Slack"] $ws4
 assign [class="Thunderbird"] $ws8
-assign [class="Pidgin"] $ws8
-assign [class="Skype"] $ws8
+assign [class="Pidgin"] $ws4
+assign [class="Chrome"] $ws2
 
 workspace "$ws1" output DP1
 workspace "$ws3" output DP1
@@ -247,3 +245,4 @@ exec feh --bg-scale ~/dotfiles/i3wm/bg.png
 exec atom
 exec thunderbird
 exec pidgin
+exec chromium-browser
