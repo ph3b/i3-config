@@ -222,7 +222,7 @@ for_window [title="Controlled multi-tab browsing"] floating enable
 #assign certain applications to certain workspaces
 assign [class="Thunderbird"] $ws8
 assign [class="Pidgin"] $ws4
-assign [class="Chrome"] $ws2
+assign [class="Chromium"] $ws2
 
 workspace "$ws1" output DP1
 workspace "$ws3" output DP1
