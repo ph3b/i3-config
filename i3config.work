@@ -242,9 +242,8 @@ workspace "$ws8" output DP2
 exec xautolock -time 5 -locker lock
 exec setxkbmap no
 exec xrandr --auto --output DP1 --mode 1920x1080 --left-of DP2
+exec feh --bg-scale ~/dotfiles/i3wm/bg.png
 
 exec atom
-exec google-chrome-stable
-exec xchat-gnome
 exec thunderbird
 exec pidgin
