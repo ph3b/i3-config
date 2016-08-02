@@ -91,7 +91,7 @@ set $ws2 2: Chrome
 set $ws3 3: File System
 set $ws4 4: Chat
 set $ws5 5: Terminal 2
-set $ws6 6: Spotify
+set $ws6 6: Music
 set $ws7 7: Terminal 3
 set $ws8 8: Mail
 set $ws9 9: Terminal 4
